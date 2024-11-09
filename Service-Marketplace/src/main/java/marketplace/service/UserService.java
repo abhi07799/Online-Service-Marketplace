@@ -3,6 +3,9 @@ package marketplace.service;
 import lombok.RequiredArgsConstructor;
 import marketplace.dto.request.UserRequestDto;
 import marketplace.dto.response.UserResponseDto;
+import marketplace.exception.CustomException;
+import marketplace.exception.ResourceAlreadyExistException;
+import marketplace.exception.ResourceNotFoundException;
 import marketplace.model.UserModel;
 import marketplace.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -27,15 +30,24 @@ public class UserService
         try
         {
             UserModel userModel = mapper.map(userRequestDto, UserModel.class);
-            UserModel savedUser = userRepository.save(userModel);
 
+            Optional<UserModel> optionalUserModel = userRepository.findByUserMail(userModel.getUserMail());
+            if (optionalUserModel.isPresent())
+            {
+                throw new ResourceAlreadyExistException();
+            }
+            
+            UserModel savedUser = userRepository.save(userModel);
             return mapper.map(savedUser, UserResponseDto.class);
         }
         catch (Exception ex)
         {
-            ex.printStackTrace();
+            if(ex instanceof ResourceAlreadyExistException)
+            {
+                throw new ResourceAlreadyExistException("User already exists with this mail",ex);
+            }
+            throw new CustomException("Something went wrong!!", ex);
         }
-        return null;
     }
 
     public UserResponseDto getUserById(long userId)
@@ -43,16 +55,20 @@ public class UserService
         try
         {
             Optional<UserModel> optionalUserModel = userRepository.findById(userId);
-            if (optionalUserModel.isPresent())
+            if (optionalUserModel.isEmpty())
             {
-                return mapper.map(optionalUserModel.get(), UserResponseDto.class);
+                throw new ResourceNotFoundException();
             }
+            return mapper.map(optionalUserModel.get(), UserResponseDto.class);
         }
         catch (Exception ex)
         {
-            ex.printStackTrace();
+            if(ex instanceof ResourceNotFoundException)
+            {
+                throw new ResourceNotFoundException("User does not exist with this id: "+userId,ex);
+            }
+            throw new CustomException("Something went wrong!!", ex);
         }
-        return null;
     }
 
     public List<UserResponseDto> getAllUsers()
@@ -61,17 +77,21 @@ public class UserService
         {
             List<UserModel> userModels = userRepository.findAll();
 
-            if (!userModels.isEmpty())
+            if (userModels.isEmpty())
             {
-                List<UserResponseDto> dtoList = userModels.stream().map(user -> mapper.map(user, UserResponseDto.class)).toList();
-                return dtoList;
+                throw new ResourceNotFoundException();                
             }
+            List<UserResponseDto> dtoList = userModels.stream().map(user -> mapper.map(user, UserResponseDto.class)).toList();
+            return dtoList;
         }
         catch (Exception ex)
         {
-            ex.printStackTrace();
+            if(ex instanceof ResourceNotFoundException)
+            {
+                throw new ResourceNotFoundException("No user found",ex);
+            }
+            throw new CustomException("Something went wrong!!", ex);
         }
-        return null;
     }
 
     public UserResponseDto updateUser(long userId, UserRequestDto userRequestDto)
@@ -87,16 +107,19 @@ public class UserService
         }
         catch (Exception ex)
         {
-            ex.printStackTrace();
+            if(ex instanceof ResourceNotFoundException)
+            {
+                throw new ResourceNotFoundException("User does not exist with this id: "+userId,ex);
+            }
+            throw new CustomException("Something went wrong!!", ex);
         }
-        return null;
     }
 
     private UserModel getUserModel(Optional<UserModel> optionalUserModel, UserRequestDto userRequestDto)
     {
         if (optionalUserModel.isEmpty())
         {
-            return null;
+            throw new ResourceNotFoundException();
         }
 
         UserModel userModel = optionalUserModel.get();
