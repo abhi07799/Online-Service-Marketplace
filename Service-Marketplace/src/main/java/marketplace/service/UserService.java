@@ -1,6 +1,7 @@
 package marketplace.service;
 
 import lombok.RequiredArgsConstructor;
+import marketplace.controller.UserController;
 import marketplace.dto.request.UserRequestDto;
 import marketplace.dto.response.UserResponseDto;
 import marketplace.exception.CustomException;
@@ -9,6 +10,8 @@ import marketplace.exception.ResourceNotFoundException;
 import marketplace.model.UserModel;
 import marketplace.repository.UserRepository;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService
 {
+    private final Logger log = LoggerFactory.getLogger(UserController.class);
+
     @Autowired
     private UserRepository userRepository;
 
@@ -29,6 +34,7 @@ public class UserService
     {
         try
         {
+            log.info("Adding new user");
             UserModel userModel = mapper.map(userRequestDto, UserModel.class);
 
             Optional<UserModel> optionalUserModel = userRepository.findByUserMail(userModel.getUserMail());
@@ -38,14 +44,17 @@ public class UserService
             }
             
             UserModel savedUser = userRepository.save(userModel);
+            log.info("User added successfully");
             return mapper.map(savedUser, UserResponseDto.class);
         }
         catch (Exception ex)
         {
             if(ex instanceof ResourceAlreadyExistException)
             {
+                log.error("User already exists with this mail",ex);
                 throw new ResourceAlreadyExistException("User already exists with this mail",ex);
             }
+            log.error("Error while adding user",ex);
             throw new CustomException("Something went wrong!!", ex);
         }
     }
@@ -54,19 +63,23 @@ public class UserService
     {
         try
         {
+            log.info("Getting user by id: {}",userId);
             Optional<UserModel> optionalUserModel = userRepository.findById(userId);
             if (optionalUserModel.isEmpty())
             {
                 throw new ResourceNotFoundException();
             }
+            log.info("User retrieved successfully");
             return mapper.map(optionalUserModel.get(), UserResponseDto.class);
         }
         catch (Exception ex)
         {
             if(ex instanceof ResourceNotFoundException)
             {
+                log.error("User does not exist with this id",ex);
                 throw new ResourceNotFoundException("User does not exist with this id: "+userId,ex);
             }
+            log.error("Error while getting user by id: {}",userId,ex);
             throw new CustomException("Something went wrong!!", ex);
         }
     }
@@ -75,6 +88,7 @@ public class UserService
     {
         try
         {
+            log.info("Getting all users");
             List<UserModel> userModels = userRepository.findAll();
 
             if (userModels.isEmpty())
@@ -82,14 +96,17 @@ public class UserService
                 throw new ResourceNotFoundException();                
             }
             List<UserResponseDto> dtoList = userModels.stream().map(user -> mapper.map(user, UserResponseDto.class)).toList();
+            log.info("All users retrieved successfully");
             return dtoList;
         }
         catch (Exception ex)
         {
             if(ex instanceof ResourceNotFoundException)
             {
+                log.error("No user found",ex);
                 throw new ResourceNotFoundException("No user found",ex);
             }
+            log.error("Error while getting all users",ex);
             throw new CustomException("Something went wrong!!", ex);
         }
     }
@@ -98,19 +115,23 @@ public class UserService
     {
         try
         {
+            log.info("Updating user by id: {}",userId);
             Optional<UserModel> optionalUserModel = userRepository.findById(userId);
 
             UserModel userModel = getUserModel(optionalUserModel, userRequestDto);
             UserModel savedUser = userRepository.save(userModel);
 
+            log.info("User updated successfully");
             return mapper.map(savedUser, UserResponseDto.class);
         }
         catch (Exception ex)
         {
             if(ex instanceof ResourceNotFoundException)
             {
+                log.error("User does not exist with this id",ex);
                 throw new ResourceNotFoundException("User does not exist with this id: "+userId,ex);
             }
+            log.error("Error while updating user",ex);
             throw new CustomException("Something went wrong!!", ex);
         }
     }
