@@ -30,7 +30,7 @@ public class CustomGlobalExceptionHandler
 
         ErrorDto errorDto = ErrorDto.builder().timestamp(LocalDateTime.now()).message(ex.getMessage()).path(path).exceptionStackTrace(ExceptionUtils.getStackTrace(ex)).build();
 
-        return new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(errorDto, HttpStatus.NOT_FOUND);
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)
