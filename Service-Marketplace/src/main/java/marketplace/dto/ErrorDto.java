@@ -16,7 +16,7 @@ public class ErrorDto
 {
     private LocalDateTime timestamp;
     private String message;
-    private Map<String, String> multiErrors;
+    private Map<String, String> errors;
     private String path;
     private String exceptionStackTrace;
 

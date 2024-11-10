@@ -1,5 +1,6 @@
 package marketplace.controller;
 
+import jakarta.validation.Valid;
 import marketplace.dto.request.UserRequestDto;
 import marketplace.service.UserService;
 import org.slf4j.Logger;
@@ -19,7 +20,7 @@ public class UserController
     private UserService userService;
 
     @PostMapping("addUser")
-    public ResponseEntity<?> createUser(@RequestBody UserRequestDto userRequestDto)
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserRequestDto userRequestDto)
     {
         log.info("Request to create a user");
         return new ResponseEntity<>(userService.addUser(userRequestDto), HttpStatus.CREATED);
