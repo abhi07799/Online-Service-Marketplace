@@ -5,12 +5,14 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserRequestDto
+public class VendorRequestDto
 {
     @NotNull(message = "Full name must not be null")
     @NotEmpty(message = "Full name must not be empty")
@@ -18,7 +20,7 @@ public class UserRequestDto
 
     @NotNull(message = "Email must not be null")
     @NotEmpty(message = "Email must not be empty")
-    private String userMail;
+    private String vendorMail;
 
     @NotNull(message = "Password must not be null")
     @NotEmpty(message = "Password must not be empty")
@@ -26,10 +28,14 @@ public class UserRequestDto
 
     @NotNull(message = "Address must not be null")
     @NotEmpty(message = "Address must not be empty")
-    private String userAddress;
+    private String vendorAddress;
+
+    @NotNull(message = "Address must not be null")
+    @NotEmpty(message = "Address must not be empty")
+    private Set<String> services;
 
     @NotNull(message = "Role must not be null")
     @NotEmpty(message = "Role must not be empty")
-    @Pattern(regexp = "^(?i)provider|user|admin$", message = "Role must be either 'provider', 'user', or 'admin'")
+    @Pattern(regexp = "^(?i)vendor|user|admin$", message = "Role must be either 'vendor', 'user', or 'admin'")
     private String role;
 }

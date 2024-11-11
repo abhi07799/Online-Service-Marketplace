@@ -5,6 +5,8 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -12,8 +14,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "users")
-public class UserModel
+@Table(name = "vendors")
+public class VendorModel
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,13 +24,16 @@ public class UserModel
     private String fullName;
 
     @Column(unique = true,nullable = false)
-    private String userMail;
+    private String vendorMail;
 
     @Column(nullable = false)
     private String password;
 
     @Column(nullable = false)
-    private String userAddress;
+    private String vendorAddress;
+
+    @Column(nullable = false)
+    private Set<String> services;
 
     @Column(nullable = false)
     private String role;

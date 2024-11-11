@@ -1,7 +1,6 @@
 package marketplace.service;
 
 import lombok.RequiredArgsConstructor;
-import marketplace.controller.UserController;
 import marketplace.dto.request.UserRequestDto;
 import marketplace.dto.response.UserResponseDto;
 import marketplace.exception.CustomException;
@@ -22,7 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService
 {
-    private final Logger log = LoggerFactory.getLogger(UserController.class);
+    private final Logger log = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -157,10 +156,6 @@ public class UserService
         if (userRequestDto.getPassword() != null && !userRequestDto.getPassword().isEmpty())
         {
             userModel.setPassword(userRequestDto.getPassword());
-        }
-        if (userRequestDto.getUserMobile() != null && !userRequestDto.getUserMobile().isEmpty())
-        {
-            userModel.setUserMobile(userRequestDto.getUserMobile());
         }
         if (userRequestDto.getUserAddress() != null && !userRequestDto.getUserAddress().isEmpty())
         {
