@@ -4,7 +4,9 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
+import marketplace.model.ServiceModel;
 
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -30,9 +32,7 @@ public class VendorRequestDto
     @NotEmpty(message = "Address must not be empty")
     private String vendorAddress;
 
-    @NotNull(message = "Address must not be null")
-    @NotEmpty(message = "Address must not be empty")
-    private Set<String> services;
+    private List<ServiceModel> services;
 
     @NotNull(message = "Role must not be null")
     @NotEmpty(message = "Role must not be empty")

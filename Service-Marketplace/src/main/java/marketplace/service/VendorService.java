@@ -161,7 +161,7 @@ public class VendorService
         {
             vendorModel.setVendorAddress(vendorRequestDto.getVendorAddress());
         }
-        if(!vendorRequestDto.getServices().isEmpty())
+        if(vendorRequestDto.getServices() != null)
         {
             vendorModel.setServices(vendorRequestDto.getServices());
         }

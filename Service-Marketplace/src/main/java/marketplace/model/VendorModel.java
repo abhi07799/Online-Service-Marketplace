@@ -6,7 +6,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -32,8 +31,8 @@ public class VendorModel
     @Column(nullable = false)
     private String vendorAddress;
 
-    @Column(nullable = false)
-    private Set<String> services;
+    @OneToMany(mappedBy = "vendor")
+    private List<ServiceModel> services;
 
     @Column(nullable = false)
     private String role;

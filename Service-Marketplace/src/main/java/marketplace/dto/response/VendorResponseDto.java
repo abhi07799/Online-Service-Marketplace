@@ -1,8 +1,10 @@
 package marketplace.dto.response;
 
 import lombok.*;
+import marketplace.model.ServiceModel;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -17,7 +19,7 @@ public class VendorResponseDto
     private String vendorMail;
     private String password;
     private String vendorAddress;
-    private Set<String> services;
+    private List<ServiceModel> services;
     private String role;
     private LocalDateTime AccountCreatedOn;
 }
