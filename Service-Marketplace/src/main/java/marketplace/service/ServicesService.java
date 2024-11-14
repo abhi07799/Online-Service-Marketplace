@@ -34,7 +34,7 @@ public class ServicesService
         {
             log.info("Adding new service");
             ServiceModel serviceModel = mapper.map(serviceRequestDto, ServiceModel.class);
-
+            serviceModel.setServiceStatus("InActive");
             ServiceModel savedService = serviceRepository.save(serviceModel);
             log.info("Service added successfully");
             return mapper.map(savedService, ServiceResponseDto.class);
@@ -120,6 +120,33 @@ public class ServicesService
                 throw new ResourceNotFoundException("Service does not exist with this title: "+serviceTitle,ex);
             }
             log.error("Error while getting service by title: {}",serviceTitle,ex);
+            throw new CustomException("Something went wrong!!", ex);
+        }
+    }
+
+    public ServiceResponseDto approveService(long serviceId)
+    {
+        try
+        {
+            log.info("Approving service by id: {}",serviceId);
+            Optional<ServiceModel> optionalServiceModel = serviceRepository.findById(serviceId);
+            if (optionalServiceModel.isEmpty())
+            {
+                throw new ResourceNotFoundException();
+            }
+            log.info("Service approved successfully");
+            ServiceModel serviceModel = optionalServiceModel.get();
+            serviceModel.setServiceStatus("Active");
+            return mapper.map(serviceRepository.save(serviceModel), ServiceResponseDto.class);
+        }
+        catch (Exception ex)
+        {
+            if(ex instanceof ResourceNotFoundException)
+            {
+                log.error("Service does not exist with this id",ex);
+                throw new ResourceNotFoundException("Service does not exist with this id: "+serviceId,ex);
+            }
+            log.error("Error while approving service by id: {}",serviceId,ex);
             throw new CustomException("Something went wrong!!", ex);
         }
     }

@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import marketplace.dto.request.ServiceRequestDto;
 import marketplace.dto.response.ServiceResponseDto;
+import marketplace.dto.response.UserResponseDto;
 import marketplace.service.ServicesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -116,7 +117,26 @@ public class ServiceController
         log.info("Request to get service by id: {}",serviceId);
         return new ResponseEntity<>(serviceService.getServiceById(serviceId), HttpStatus.OK);
     }
-
-
+    /*
+        approve service - for admin
+    */
+    @Operation(summary = "approve service", description = "This endpoint accepts service id and userId and returns an updated service response dto.")
+    @ApiResponses(
+            { @ApiResponse(responseCode = "200",description = "Service approved successfully",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDto.class))
+            ),
+                    @ApiResponse(responseCode = "404",description = "Service Not Found",
+                            content = @Content(mediaType = "application/json")
+                    ),
+                    @ApiResponse(responseCode = "500",description = "Internal Server Error",
+                            content = @Content(mediaType = "application/json")
+                    )
+            })
+    @PutMapping("approveService/{serviceId}")
+    public ResponseEntity<?> approveService(@PathVariable Long serviceId)
+    {
+        log.info("Request to approve service by id: {}",serviceId);
+        return new ResponseEntity<>(serviceService.approveService(serviceId), HttpStatus.OK);
+    }
 
 }
