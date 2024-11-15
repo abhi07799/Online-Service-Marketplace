@@ -6,7 +6,9 @@ import marketplace.dto.response.ServiceResponseDto;
 import marketplace.exception.CustomException;
 import marketplace.exception.ResourceNotFoundException;
 import marketplace.model.ServiceModel;
+import marketplace.model.VendorModel;
 import marketplace.repository.ServiceRepository;
+import marketplace.repository.VendorRepository;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,9 @@ public class ServicesService
     private ServiceRepository serviceRepository;
 
     @Autowired
+    private VendorRepository vendorRepository;
+
+    @Autowired
     private ModelMapper mapper;
 
     private final Logger log= LoggerFactory.getLogger(ServicesService.class);
@@ -33,6 +38,13 @@ public class ServicesService
         try
         {
             log.info("Adding new service");
+
+            Optional<VendorModel> optionalVendorModel = vendorRepository.findById(serviceRequestDto.getVendor().getId());
+            if(optionalVendorModel.isEmpty())
+            {
+                throw new ResourceNotFoundException("Vendor not found with id: " + serviceRequestDto.getVendor().getId());
+            }
+
             ServiceModel serviceModel = mapper.map(serviceRequestDto, ServiceModel.class);
             serviceModel.setServiceStatus("InActive");
             ServiceModel savedService = serviceRepository.save(serviceModel);
@@ -41,6 +53,11 @@ public class ServicesService
         }
         catch (Exception ex)
         {
+            if(ex instanceof ResourceNotFoundException)
+            {
+                log.error("Vendor does not exist",ex);
+                throw new ResourceNotFoundException(ex.getMessage());
+            }
             log.error("Error while adding service",ex);
             throw new CustomException("Something went wrong!!", ex);
         }

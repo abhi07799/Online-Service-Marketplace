@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import marketplace.dto.request.ServiceRequestDto;
 import marketplace.dto.response.ServiceResponseDto;
-import marketplace.dto.response.UserResponseDto;
 import marketplace.service.ServicesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Service", description = "Service management APIs")
 @RestController
-@RequestMapping("api/v1/")
+@RequestMapping("api/v1/service/")
 public class ServiceController
 {
     private final Logger log = LoggerFactory.getLogger(ServiceController.class);
@@ -120,10 +119,10 @@ public class ServiceController
     /*
         approve service - for admin
     */
-    @Operation(summary = "approve service", description = "This endpoint accepts service id and userId and returns an updated service response dto.")
+    @Operation(summary = "approve service", description = "This endpoint accepts service id and returns an updated service response dto.")
     @ApiResponses(
             { @ApiResponse(responseCode = "200",description = "Service approved successfully",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDto.class))
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ServiceResponseDto.class))
             ),
                     @ApiResponse(responseCode = "404",description = "Service Not Found",
                             content = @Content(mediaType = "application/json")

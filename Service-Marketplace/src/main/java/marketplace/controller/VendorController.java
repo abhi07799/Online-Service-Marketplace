@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Vendor", description = "Vendor management APIs")
 @RestController
-@RequestMapping("api/v1/")
+@RequestMapping("api/v1/vendor/")
 public class VendorController
 {
     private final Logger log = LoggerFactory.getLogger(VendorController.class);

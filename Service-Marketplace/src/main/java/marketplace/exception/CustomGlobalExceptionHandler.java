@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -44,6 +45,19 @@ public class CustomGlobalExceptionHandler
 
         return new ResponseEntity<>(errorDto, HttpStatus.CONFLICT);
     }
+
+
+//    @ResponseStatus(HttpStatus.NOT_FOUND)
+//    @ExceptionHandler(NoResourceFoundException.class)
+//    @ResponseBody
+//    public ResponseEntity<ErrorDto> handleNoResourceFoundException(NoResourceFoundException ex, WebRequest request)
+//    {
+//        String path = request.getDescription(false).substring(4);
+//
+//        ErrorDto errorDto = ErrorDto.builder().timestamp(LocalDateTime.now()).message("Invalid request!! No static resource available for "+path).path(path).exceptionStackTrace(ExceptionUtils.getStackTrace(ex)).build();
+//
+//        return new ResponseEntity<>(errorDto, HttpStatus.NOT_FOUND);
+//    }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
