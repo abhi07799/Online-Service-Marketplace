@@ -46,19 +46,6 @@ public class CustomGlobalExceptionHandler
         return new ResponseEntity<>(errorDto, HttpStatus.CONFLICT);
     }
 
-
-//    @ResponseStatus(HttpStatus.NOT_FOUND)
-//    @ExceptionHandler(NoResourceFoundException.class)
-//    @ResponseBody
-//    public ResponseEntity<ErrorDto> handleNoResourceFoundException(NoResourceFoundException ex, WebRequest request)
-//    {
-//        String path = request.getDescription(false).substring(4);
-//
-//        ErrorDto errorDto = ErrorDto.builder().timestamp(LocalDateTime.now()).message("Invalid request!! No static resource available for "+path).path(path).exceptionStackTrace(ExceptionUtils.getStackTrace(ex)).build();
-//
-//        return new ResponseEntity<>(errorDto, HttpStatus.NOT_FOUND);
-//    }
-
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     @ResponseBody

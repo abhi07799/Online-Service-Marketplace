@@ -167,4 +167,31 @@ public class ServicesService
             throw new CustomException("Something went wrong!!", ex);
         }
     }
+
+    public List<ServiceResponseDto> getVendorAllServices(long vendorId)
+    {
+        try
+        {
+            log.info("Getting all services of a vendor by id: {}",vendorId);
+            List<ServiceModel> serviceModels = serviceRepository.findByVendor_Id(vendorId);
+
+            if (serviceModels.isEmpty())
+            {
+                throw new ResourceNotFoundException();
+            }
+            List<ServiceResponseDto> dtoList = serviceModels.stream().map(service -> mapper.map(service, ServiceResponseDto.class)).toList();
+            log.info("All services of the vendor retrieved successfully");
+            return dtoList;
+        }
+        catch (Exception ex)
+        {
+            if (ex instanceof ResourceNotFoundException)
+            {
+                log.error("No services found of vendor id : {}",vendorId, ex);
+                throw new ResourceNotFoundException("No services found for vendor id : "+vendorId, ex);
+            }
+            log.error("Error while getting all services of vendor", ex);
+            throw new CustomException("Something went wrong!!", ex);
+        }
+    }
 }

@@ -138,4 +138,25 @@ public class ServiceController
         return new ResponseEntity<>(serviceService.approveService(serviceId), HttpStatus.OK);
     }
 
+    /*
+       To fetch all services
+    */
+    @Operation(summary = "Fetch all vendor services", description = "This endpoint takes a vendor id and returns a list of service response dto.")
+    @ApiResponses(
+            { @ApiResponse(responseCode = "200",description = "All Services fetched successfully",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ServiceResponseDto.class))
+            ),
+                    @ApiResponse(responseCode = "404",description = "Service Not Found",
+                            content = @Content(mediaType = "application/json")
+                    ),
+                    @ApiResponse(responseCode = "500",description = "Internal Server Error",
+                            content = @Content(mediaType = "application/json")
+                    )
+            })
+    @GetMapping("getVendorAllServices/{vendorId}")
+    public ResponseEntity<?> getVendorAllServices(@PathVariable Long vendorId)
+    {
+        log.info("Request to get all vendor services");
+        return new ResponseEntity<>(serviceService.getVendorAllServices(vendorId), HttpStatus.OK);
+    }
 }
