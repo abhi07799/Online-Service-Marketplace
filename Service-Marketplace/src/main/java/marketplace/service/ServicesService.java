@@ -101,7 +101,10 @@ public class ServicesService
             }
             List<ServiceResponseDto> dtoList = serviceModels.stream().map(service -> mapper.map(service, ServiceResponseDto.class)).toList();
             log.info("All services retrieved successfully");
-            return dtoList;
+            return dtoList.stream().map(dto->{
+                dto.getVendor().setServices(null);
+                return dto;
+            }).toList();
         }
         catch (Exception ex)
         {

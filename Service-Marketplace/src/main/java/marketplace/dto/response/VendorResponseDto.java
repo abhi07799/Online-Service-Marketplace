@@ -1,5 +1,6 @@
 package marketplace.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import marketplace.model.ServiceModel;
 
@@ -12,6 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class VendorResponseDto
 {
     private long id;
