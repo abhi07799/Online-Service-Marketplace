@@ -90,7 +90,7 @@
 			<version>2.2.0</version>
 		</dependency>
 
-		<!-- JUnit and Mockito dependencies for Unit Testing-->
+		<!--unit testing dependencies-->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
