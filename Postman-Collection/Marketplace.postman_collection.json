@@ -1,0 +1,479 @@
+{
+	"info": {
+		"_postman_id": "9692ec7c-013b-44c7-94eb-436652794ce5",
+		"name": "Marketplace",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27490339"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Add User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"sdf\",\r\n  \"userMail\": \"siyaram@ram\",\r\n  \"password\": \"ram123\",\r\n  \"userMobile\": \"234\",\r\n  \"userAddress\": \"ayodhya\",\r\n  \"role\": \"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/addUser",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"addUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzaXlhcmFtQHJhbSIsImlhdCI6MTczMzU3NzMzMSwiZXhwIjoxNzMzNjYzNzMxfQ.xR_HnRiR0tXHWn2tWV8vZYf3oDRULtvlPBPtXw7dMlDD6mgzZan7XE5sQJae3Jbv",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/user/getAllUsers",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"user",
+								"getAllUsers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzaXlhcmFtQHJhbSIsImlhdCI6MTczMzU3NzMzMSwiZXhwIjoxNzMzNjYzNzMxfQ.xR_HnRiR0tXHWn2tWV8vZYf3oDRULtvlPBPtXw7dMlDD6mgzZan7XE5sQJae3Jbv",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/user/getUserById/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"user",
+								"getUserById",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"\",\r\n  \"userMail\": \"siya@ram\",\r\n  \"password\": \"\",\r\n  \"userMobile\": \"\",\r\n  \"userAddress\": \"\",\r\n  \"role\": \"\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/user/updateUser/27",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"user",
+								"updateUser",
+								"27"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vendor",
+			"item": [
+				{
+					"name": "Add Vendor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"John Doe\",\r\n  \"vendorMail\": \"johnedoe@example.com\",\r\n  \"password\": \"password123\",\r\n  \"vendorAddress\": \"1234 Vendor St, City, Country\",\r\n  \"role\": \"vendor\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/addVendor",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"addVendor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Vendors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/vendor/getAllVendors",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"vendor",
+								"getAllVendors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vendor By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/vendor/getVendorById/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"vendor",
+								"getVendorById",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Vendor",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"John Doe\",\r\n  \"vendorMail\": \"johndo4e@example.com\",\r\n  \"password\": \"password123\",\r\n  \"vendorAddress\": \"1234 Vendor St, City, Country\",\r\n  \"services\": [\r\n    \"Cleaning\",\r\n    \"Delivery\",\r\n    \"Safai\"\r\n  ],\r\n  \"role\": \"vendor\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/vendor/updateVendor/2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"vendor",
+								"updateVendor",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Service",
+			"item": [
+				{
+					"name": "Add Services",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"serviceTitle\": \"Web Design\",\r\n  \"serviceDescription\": \"Professional web design services for your business.\",\r\n  \"servicePrice\": \"5000\",\r\n  \"vendor\": {\r\n    \"id\": 1 // Only the vendor ID is needed\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/service/addService",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"service",
+								"addService"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Services",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/service/getAllServices",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"service",
+								"getAllServices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Service By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/service/getServiceById/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"service",
+								"getServiceById",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Service By Title",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/service/getServiceByTitle?serviceTitle=Web Design",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"service",
+								"getServiceByTitle"
+							],
+							"query": [
+								{
+									"key": "serviceTitle",
+									"value": "Web Design"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Service of Vendor By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/service/getVendorAllServices/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"service",
+								"getVendorAllServices",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve Service",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/service/approveService/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"service",
+								"approveService",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Booking",
+			"item": [
+				{
+					"name": "Add Booking",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user\": {\r\n    \"id\": 1\r\n  },\r\n  \"service\": {\r\n    \"id\": 1\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/booking/addBooking",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"booking",
+								"addBooking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Booking By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/booking/getBookingById/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"booking",
+								"getBookingById",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Bookings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/booking/getAllBookings",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"booking",
+								"getAllBookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Booking Status",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/booking/updateBookingStatus/1?bookingStatus=cancel",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"booking",
+								"updateBookingStatus",
+								"1"
+							],
+							"query": [
+								{
+									"key": "bookingStatus",
+									"value": "cancel"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userMail\": \"siyaram@ram\",\r\n  \"password\": \"ram123\",\r\n  \"role\": \"user\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/auth/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -28,8 +28,9 @@ public class SecurityConfiguration
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
     {
         return http.csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
-                        req.requestMatchers("/api/v1/auth/login/**","/swagger-ui/index.html", "/api/v1/addVendor","/api/v1/addUser", "/h2/**").permitAll()
+                        req.requestMatchers("/api/v1/auth/login/**","/swagger-ui/index.html", "/api/v1/addVendor","/api/v1/addUser","/swagger-ui/**", "/v3/api-docs/**","/h2/**","/v3/swagger-config/**").permitAll()
                                 .requestMatchers("/vendor/**").hasAuthority("VENDOR")
                                 .requestMatchers("/user/**").hasAuthority("USER").anyRequest().authenticated())
                 .userDetailsService(userDetailsService)
