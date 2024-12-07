@@ -51,7 +51,7 @@ This is a backend REST API application for a service marketplace built with **Sp
 
 1. **Clone the repository:**
     ```sh
-    git clone https://github.com/your-username/service-marketplace-backend.git
+    https://github.com/abhi07799/Online-Service-Marketplace.git
     ```
 2. **Navigate to the project directory:**
     ```sh
@@ -90,11 +90,11 @@ Logging is configured using the built-in SLF4J logging support. You can check th
 Special thanks to the open-source community for providing amazing libraries and tools.
 
 ## 🖼️ Swagger-UI Images
-![Image 1](images/swagger1.png)  
+![Image 1](Images/swagger1.png)  
 
-![Image 2](images/swagger2.png)  
+![Image 2](Images/swagger2.png)  
 
-![Image 3](images/swagger3.png)  
+![Image 3](Images/swagger3.png)  
 
-![Image 4](images/swagger4.png)
+![Image 4](Images/swagger4.png)
 
