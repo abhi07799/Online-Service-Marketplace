@@ -4,8 +4,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
@@ -15,7 +20,7 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @Table(name = "users")
-public class UserModel
+public class UserModel implements UserDetails
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +28,7 @@ public class UserModel
     @Column(nullable = false)
     private String fullName;
 
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     private String userMail;
 
     @Column(nullable = false)
@@ -33,9 +38,22 @@ public class UserModel
     private String userAddress;
 
     @Column(nullable = false)
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime AccountCreatedOn;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities()
+    {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getUsername()
+    {
+        return this.userMail;
+    }
 }

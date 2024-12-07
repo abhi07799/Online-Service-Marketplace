@@ -6,12 +6,14 @@ import marketplace.dto.response.VendorResponseDto;
 import marketplace.exception.CustomException;
 import marketplace.exception.ResourceAlreadyExistException;
 import marketplace.exception.ResourceNotFoundException;
+import marketplace.model.Role;
 import marketplace.model.VendorModel;
 import marketplace.repository.VendorRepository;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +31,9 @@ public class VendorService
     @Autowired
     private ModelMapper mapper;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public VendorResponseDto addVendor(VendorRequestDto vendorRequestDto)
     {
         try
@@ -42,6 +47,8 @@ public class VendorService
                 throw new ResourceAlreadyExistException();
             }
 
+            vendorModel.setRole(Role.valueOf(vendorRequestDto.getRole().toUpperCase()));
+            vendorModel.setPassword(passwordEncoder.encode(vendorRequestDto.getPassword()));
             VendorModel savedVendor = vendorRepository.save(vendorModel);
             log.info("Vendor added successfully");
             return mapper.map(savedVendor, VendorResponseDto.class);

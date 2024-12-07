@@ -15,12 +15,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
 @Tag(name = "Vendor", description = "Vendor management APIs")
 @RestController
-@RequestMapping("api/v1/vendor/")
+@RequestMapping("api/v1/")
 public class VendorController
 {
     private final Logger log = LoggerFactory.getLogger(VendorController.class);
@@ -41,6 +42,7 @@ public class VendorController
                     )
             })
     @PostMapping("addVendor")
+
     public ResponseEntity<?> createVendor(@Valid @RequestBody VendorRequestDto vendorRequestDto)
     {
         log.info("Request to create a vendor");
@@ -60,7 +62,8 @@ public class VendorController
                             content = @Content(mediaType = "application/json")
                     )
             })
-    @GetMapping("getAllVendors")
+    @GetMapping("vendor/getAllVendors")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> getAllVendors()
     {
         log.info("Request to get all vendors");
@@ -80,7 +83,8 @@ public class VendorController
                             content = @Content(mediaType = "application/json")
                     )
             })
-    @GetMapping("getVendorById/{vendorId}")
+    @GetMapping("vendor/getVendorById/{vendorId}")
+    @PreAuthorize("hasAuthority('VENDOR')")
     public ResponseEntity<?> getVendorById(@PathVariable Long vendorId)
     {
         log.info("Request to get vendor by id: {}",vendorId);
@@ -100,7 +104,8 @@ public class VendorController
                             content = @Content(mediaType = "application/json")
                     )
             })
-    @PutMapping("updateVendor/{vendorId}")
+    @PutMapping("vendor/updateVendor/{vendorId}")
+    @PreAuthorize("hasAuthority('VENDOR')")
     public ResponseEntity<?> updateVendor(@PathVariable Long vendorId, @RequestBody VendorRequestDto vendorRequestDto)
     {
         log.info("Request to update vendor by id: {}",vendorId);

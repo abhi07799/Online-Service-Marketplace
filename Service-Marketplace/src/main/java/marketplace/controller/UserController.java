@@ -15,12 +15,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
 @Tag(name = "User", description = "User management APIs")
 @RestController
-@RequestMapping("api/v1/user/")
+@RequestMapping("api/v1/")
 public class UserController
 {
     private final Logger log = LoggerFactory.getLogger(UserController.class);
@@ -60,7 +61,8 @@ public class UserController
                             content = @Content(mediaType = "application/json")
                     )
             })
-    @GetMapping("getAllUsers")
+    @GetMapping("user/getAllUsers")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> getAllUsers()
     {
         log.info("Request to get all users");
@@ -80,7 +82,8 @@ public class UserController
                             content = @Content(mediaType = "application/json")
                     )
             })
-    @GetMapping("getUserById/{userId}")
+    @GetMapping("user/getUserById/{userId}")
+    @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<?> getUserById(@PathVariable Long userId)
     {
         log.info("Request to get user by id: {}",userId);
@@ -100,7 +103,8 @@ public class UserController
                             content = @Content(mediaType = "application/json")
                     )
             })
-    @PutMapping("updateUser/{userId}")
+    @PutMapping("user/updateUser/{userId}")
+    @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody UserRequestDto userRequestDto)
     {
         log.info("Request to update user by id: {}",userId);

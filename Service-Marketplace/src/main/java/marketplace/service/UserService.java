@@ -6,12 +6,14 @@ import marketplace.dto.response.UserResponseDto;
 import marketplace.exception.CustomException;
 import marketplace.exception.ResourceAlreadyExistException;
 import marketplace.exception.ResourceNotFoundException;
+import marketplace.model.Role;
 import marketplace.model.UserModel;
 import marketplace.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +31,9 @@ public class UserService
     @Autowired
     private ModelMapper mapper;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public UserResponseDto addUser(UserRequestDto userRequestDto)
     {
         try
@@ -41,7 +46,9 @@ public class UserService
             {
                 throw new ResourceAlreadyExistException();
             }
-            
+
+            userModel.setRole(Role.valueOf(userRequestDto.getRole().toUpperCase()));
+            userModel.setPassword(passwordEncoder.encode(userRequestDto.getPassword()));
             UserModel savedUser = userRepository.save(userModel);
             log.info("User added successfully");
             return mapper.map(savedUser, UserResponseDto.class);

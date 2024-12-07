@@ -5,6 +5,7 @@ import marketplace.dto.response.UserResponseDto;
 import marketplace.exception.CustomException;
 import marketplace.exception.ResourceAlreadyExistException;
 import marketplace.exception.ResourceNotFoundException;
+import marketplace.model.Role;
 import marketplace.model.UserModel;
 import marketplace.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,8 +51,8 @@ class UserServiceTest
         MockitoAnnotations.openMocks(this);
 
         userRequestDto = new UserRequestDto().builder().fullName("john").userMail("abc@test.com").password("124").userAddress("india").role("user").build();
-        userModel = new UserModel().builder().id(1).fullName("john").userMail("abc@test.com").password("124").userAddress("india").role("user").AccountCreatedOn(LocalDateTime.now()).build();
-        savedUserModel = new UserModel().builder().id(1).fullName("john").userMail("abc@test.com").password("124").userAddress("india").role("user").AccountCreatedOn(LocalDateTime.now()).build();
+        userModel = new UserModel().builder().id(1).fullName("john").userMail("abc@test.com").password("124").userAddress("india").role(Role.USER).AccountCreatedOn(LocalDateTime.now()).build();
+        savedUserModel = new UserModel().builder().id(1).fullName("john").userMail("abc@test.com").password("124").userAddress("india").role(Role.USER).AccountCreatedOn(LocalDateTime.now()).build();
         userResponseDto = new UserResponseDto().builder().id(1).fullName("john").userMail("abc@test.com").password("124").userAddress("india").role("user").AccountCreatedOn(LocalDateTime.now()).build();
         userModels = new ArrayList<>();
         userModels.add(userModel);
